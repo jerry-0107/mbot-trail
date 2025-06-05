@@ -15,10 +15,11 @@
 
 <body class="m-3 ">
     <h1>軌道擺設模擬</h1>
-    <p>點擊選擇板子，按下⌈加入⌋把板子加入軌道區<br/>或者從底下選擇題組，一次加入題組中所有的軌道板</p>
+    <p>點擊選擇板子，按下⌈加入⌋把板子加入軌道區<br />或者從底下選擇題組，一次加入題組中所有的軌道板</p>
     <div id="imgset">
         <div class="form-check form-check-inline">
-            <input checked value="img-0" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault0">
+            <input checked value="img-0" class="form-check-input" type="radio" name="flexRadioDefault"
+                id="flexRadioDefault0">
             <label class="form-check-label" for="flexRadioDefault0">
                 <img id="img-0" src="/img/起點板.png" alt="" srcset="">
             </label>
@@ -65,7 +66,7 @@
                 <img id="img-7" src="/img/7.png" alt="" srcset="">
             </label>
         </div>
-        <div class="form-check form-check-inline"  >
+        <div class="form-check form-check-inline">
             <input value="img-8" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault8">
             <label class="form-check-label" for="flexRadioDefault8">
                 <img id="img-8" src="/img/8.png" alt="" srcset="">
@@ -76,21 +77,21 @@
             <label class="form-check-label" for="flexRadioDefault9">
                 <img id="img-9" src="/img/9.png" alt="" srcset="">
             </label>
-        </div>        
+        </div>
         <div class="form-check form-check-inline">
             <input value="img-S" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefaults">
             <label class="form-check-label" for="flexRadioDefaults">
                 <img id="img-S" src="/img/S.png" alt="" srcset="">
             </label>
         </div>
-       
+
         <div class="form-check form-check-inline">
             <input value="img-A" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefaultsA">
             <label class="form-check-label" for="flexRadioDefaultsA">
                 <img id="img-A" src="/img/加分點.png" alt="" srcset="">
             </label>
         </div>
-        
+
     </div>
 
     <button class="btn btn-primary" id="joinBtn">加入</button>
@@ -99,7 +100,7 @@
         <canvas id="main"></canvas>
 
     </div>
-<p></p>
+    <p></p>
     <table class="table table-bordered">
         <tbody>
             <tr>
@@ -110,9 +111,12 @@
             </tr>
             <tr>
                 <td style="background-color:#EFEFEF;">軌道題型</td>
-                <td>2、4、5、7<br><button class="btn btn-primary" onclick="addImg([2,4,5,7],['9G','18E','27F'])">加入</button></td>
-                <td>1、4、6、7<br><button class="btn btn-primary" onclick="addImg([1,4,6,7],['9G','18E','27F'])">加入</button></td>
-                <td>3、5、7、9<br><button class="btn btn-primary" onclick="addImg([3,5,7,9],['9G','18E','27F'])">加入</button></td>
+                <td>2、4、5、7<br><button class="btn btn-primary"
+                        onclick="addImg([2,4,5,7],['9G','18E','27F'])">加入</button></td>
+                <td>1、4、6、7<br><button class="btn btn-primary"
+                        onclick="addImg([1,4,6,7],['9G','18E','27F'])">加入</button></td>
+                <td>3、5、7、9<br><button class="btn btn-primary"
+                        onclick="addImg([3,5,7,9],['9G','18E','27F'])">加入</button></td>
             </tr>
             <tr>
                 <td style="background-color:#EFEFEF;">加分點</td>
@@ -120,6 +124,7 @@
             </tr>
         </tbody>
     </table>
+    <pre>BY Jerry.</pre>
     <div hidden="hidden"><img src="/img/底圖.png" alt="" srcset="" id="background"></div>
     <!--BS JS-->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
@@ -132,11 +137,9 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
 
     <!--Fabric + ext.-->
-    <script
-        src='/js/fabric.js'></script>
+    <script src='/js/fabric.js'></script>
 
-    <script
-        src="/js/customiseControls.js"></script>
+    <script src="/js/customiseControls.js"></script>
 
     <script src="/js/main.js"></script>
 </body>
