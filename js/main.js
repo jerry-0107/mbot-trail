@@ -1,6 +1,6 @@
 
 //init
-var canvas = new fabric.Canvas("main")
+var canvas = new fabric.Canvas("main", { selection: false })
 canvas.setHeight(350);
 canvas.setWidth(900);
 
@@ -186,6 +186,7 @@ canvas.on('object:selected', function (e) {
     canvas.deactivateAll()
   }
 });
+
 
 //加入題組
 function addImg(imgs, points) {
