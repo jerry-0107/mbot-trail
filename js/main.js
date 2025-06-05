@@ -1,6 +1,5 @@
-// 這段代碼超級脆弱
-// 不 ! 要 ! 亂 ! 動 !
 
+//init
 var canvas = new fabric.Canvas("main")
 canvas.setHeight(350);
 canvas.setWidth(900);
@@ -9,6 +8,7 @@ canvas.setBackgroundImage("/img/底圖.png", function () {
   canvas.renderAll();
 });
 
+//加入新板子: 取得radio value => render
 function findSelection(name) {
   try {
     return document.querySelector(`[name="${name}"]:checked`).value
@@ -38,7 +38,8 @@ $("#joinBtn").on("click", function () {
 
 
 
-//自訂控件(旋轉、刪除、複製)
+//自訂控件(旋轉、刪除、複製) 
+//以下這段code超脆弱，絕!對!不!要!動!
 fabric.Canvas.prototype.customiseControls({
   tl: {
     action: {
@@ -158,7 +159,6 @@ fabric.Object.prototype.customiseCornerIcons({
 }, function () {
   canvas.renderAll();
 });
-
 fabric.Object.prototype.setControlsVisibility({
   bl: true, // 左下
   br: true, // 右下
@@ -171,12 +171,26 @@ fabric.Object.prototype.setControlsVisibility({
   mtr: false // 旋轉控制鍵
 })
 
+//當畫布更新觸發的事件 (也許之後用的上)
 canvas.on("object:modified", function (e) { console.log(e) })
 
+//選擇多於一張板子會觸發bug
+canvas.on('object:selected', function (e) {
+  console.log(e)
+  if (e.target._objects) {
+    const alertModal = new bootstrap.Modal(document.getElementById('alertModal'));
+    if (localStorage.getItem("mbotTrailer-showalert1") !== "false") {
+      alertModal.toggle()
+    }
+    //   alert("不可以同時選擇多於一張板子");
+    canvas.deactivateAll()
+  }
+});
 
+//加入題組
 function addImg(imgs, points) {
 
-  //設定加分點:9G.18E.27F
+  //設定加分點:9G.18E.27F (對，你沒看錯，加分點是寫死的)
   var imgPath = document.querySelector("#img-" + "A")
   canvas.add(new fabric.Image(imgPath, {
     name: ``,
@@ -202,6 +216,8 @@ function addImg(imgs, points) {
     borderDashArray: [5, 5],
     cornerStyle: 'circle'
   }))
+
+  //設定板子
   var left = 0
   var imgPath = document.querySelector("#img-0")
   var img =
@@ -252,12 +268,11 @@ function addImg(imgs, points) {
     canvas.renderAll()
   }
 
-
   canvas.renderAll()
 }
 
+//防止悲劇發生 (onbeforeunload) => 要離開網站嗎?系統不會儲存你所做的變更
 window.addEventListener("beforeunload", (e) => {
   e.preventDefault();
   e.returnValue = true;
-
 });

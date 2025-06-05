@@ -130,6 +130,34 @@
     </table>
     <pre>BY Jerry. 2023 ~ 2025.06</pre>
     <div hidden="hidden"><img src="/img/底圖.png" alt="" srcset="" id="background"></div>
+    <!--Alert Modal-->
+    <div class="modal fade show" tabindex="-1" id="alertModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">不可以同時選擇一張以上的板子</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>控制按鈕會崩潰 (這是第三方函式庫的問題，目前似乎無解)</p>
+                    <p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="alertmodal-cb">
+                        <label class="form-check-label" for="alertmodal-cb">
+                            知道了，下次不用提醒我
+                        </label>
+                    </div>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                        onclick="if(document.getElementById('alertmodal-cb').checked){localStorage.setItem('mbotTrailer-showalert1','false')}">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <!--BS JS-->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
         integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
