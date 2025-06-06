@@ -18,6 +18,7 @@ const text = new fabric.Text('軌道擺設模擬 By Jerry. 2023 ~ 2025.06', {
   fill: 'black',
   evented: false,
   fontFamily: 'Arial',
+  selectable: false
 });
 
 canvas.add(text);
