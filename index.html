@@ -104,7 +104,8 @@
         <canvas id="main"></canvas>
 
     </div>
-    <p></p>
+
+    <hr />
     <table class="table table-bordered">
         <tbody>
             <tr>
@@ -128,6 +129,16 @@
             </tr>
         </tbody>
     </table>
+    <hr>
+    <h3>進階設定</h3>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="allowselection"
+            onchange="setAllowSelection(this.checked)">
+        <label class="form-check-label" for="allowselection">
+            允許框選(同時選擇超過一張板子)
+        </label>
+    </div>
+    <hr>
     <pre>BY Jerry. 2023 ~ 2025.06</pre>
     <div hidden="hidden"><img src="/img/底圖.png" alt="" srcset="" id="background"></div>
     <!--Alert Modal-->
@@ -135,11 +146,11 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">不可以同時選擇超過一張板子</h5>
+                    <h5 class="modal-title">請注意</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>控制按鈕會崩潰 (這是第三方函式庫的問題，目前似乎無解🥲)</p>
+                    <p>選擇超過一張板子之後，請勿進行旋轉、複製、刪除等操作 (控制按鈕可能會崩潰，這是第三方函式庫的問題，目前似乎無解🥲)</p>
                     <p>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="alertmodal-cb">

@@ -88,14 +88,14 @@ fabric.Canvas.prototype.customiseControls({
             canvas.add(obj);
           });
           // this should solve the unselectability
-          clonedObj.setCoords();
+          //  clonedObj.setCoords();
         } else {
           canvas.add(clonedObj);
         }
         _clipboard.top += 10;
         _clipboard.left += 10;
         canvas.setActiveObject(clonedObj);
-        // canvas.requestRenderAll();
+        canvas.requestRenderAll();
       })
     },
 
@@ -175,18 +175,31 @@ fabric.Object.prototype.setControlsVisibility({
 canvas.on("object:modified", function (e) { console.log(e) })
 
 //選擇多於一張板子會觸發bug
-canvas.on('object:selected', function (e) {
-  console.log(e)
-  if (e.target._objects) {
+// canvas.on('object:selected', function (e) {
+//   console.log(e)
+//   if (e.target._objects) {
+
+//     //   alert("不可以同時選擇多於一張板子");
+//     canvas.deactivateAll()
+//   }
+// });
+
+function setAllowSelection(e) {
+  if (e) {
+    //  localStorage.setItem("mbotTrailer-allowselection", "true")
     const alertModal = new bootstrap.Modal(document.getElementById('alertModal'));
     if (localStorage.getItem("mbotTrailer-showalert1") !== "false") {
       alertModal.toggle()
     }
-    //   alert("不可以同時選擇多於一張板子");
-    canvas.deactivateAll()
-  }
-});
+    canvas.selection = true
+    canvas.renderAll()
 
+  } else {
+    canvas.selection = false
+
+    //  localStorage.setItem("mbotTrailer-allowselection", "false")
+  }
+}
 
 //加入題組
 function addImg(imgs, points) {
