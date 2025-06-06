@@ -118,6 +118,11 @@ fabric.Canvas.prototype.customiseControls({
         clonedObj.set({
           left: clonedObj.left + 10,
           top: clonedObj.top + 10,
+          name: ``,
+
+          padding: 10,
+          borderDashArray: [5, 5],
+          cornerStyle: 'circle',
 
           evented: true,
         });
@@ -135,7 +140,8 @@ fabric.Canvas.prototype.customiseControls({
         _clipboard.top += 10;
         _clipboard.left += 10;
         canvas.setActiveObject(clonedObj);
-        canvas.requestRenderAll();
+        canvas.renderAll()
+        //   canvas.requestRenderAll();
       })
     },
 
