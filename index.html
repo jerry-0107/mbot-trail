@@ -15,11 +15,12 @@
 
 <body class="m-3 ">
     <h1>軌道擺設模擬</h1>
-    <p>點擊選擇板子，按下⌈加入⌋把板子加入軌道區<br />或者從底下選擇題組，一次加入題組中所有的軌道板</p>
-    <div class="alert alert-danger fade show alert-dismissible" role="alert">
-        <b>重要提醒 : </b>系統不會儲存任何變更<button type="button" class="btn-close" data-bs-dismiss="alert"
+    <p>點擊選擇板子，按下⌈加入⌋把板子加入軌道區<br />或者從下方表格選擇題組，一次加入題組中所有的軌道板<br />按下⌈匯出⌋可以將當前的軌道區另存成圖片檔 <a href="#" class="link-danger"
+            onclick="exportCanvas()">(注意:系統不會自動儲存變更，請自行存檔)</a></p>
+    <!-- <div class="alert alert-danger fade show alert-dismissible" role="alert">
+        <b>重要提醒 : </b>系統不會自動儲存變更 -- 請自行存檔<button type="button" class="btn-close" data-bs-dismiss="alert"
             aria-label="Close"></button>
-    </div>
+    </div> -->
     <div id="imgset">
         <div class="form-check form-check-inline">
             <input checked value="img-0" class="form-check-input" type="radio" name="flexRadioDefault"
@@ -99,6 +100,7 @@
     </div>
 
     <button class="btn btn-primary" id="joinBtn">加入</button>
+    <button class="btn btn-secondary" id="saveImgBtn">匯出</button>
 
     <div class="mt-1">
         <canvas id="main"></canvas>

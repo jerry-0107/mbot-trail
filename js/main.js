@@ -1,12 +1,26 @@
 
 //init
-var canvas = new fabric.Canvas("main", { selection: false })
+var canvas = new fabric.Canvas("main", {
+  selection: false,
+  backgroundColor: "#ffffff"
+})
 canvas.setHeight(350);
 canvas.setWidth(900);
 
 canvas.setBackgroundImage("/img/底圖.png", function () {
   canvas.renderAll();
 });
+
+const text = new fabric.Text('軌道擺設模擬 By Jerry. 2023 ~ 2025.06', {
+  left: 700,
+  top: 338,
+  fontSize: 11,
+  fill: 'black',
+  evented: false,
+  fontFamily: 'Arial',
+});
+
+canvas.add(text);
 
 //加入新板子: 取得radio value => render
 function findSelection(name) {
@@ -35,6 +49,31 @@ $("#joinBtn").on("click", function () {
   canvas.renderAll()
 })
 
+function exportCanvas() {
+  // Convert canvas to data URL
+  const dataURL = canvas.toDataURL({
+    format: 'png',
+    quality: 1.0,
+  });
+
+  var
+    dat = new Date(),
+    date = String(dat.getMonth() + 1 > 9 ? dat.getMonth() + 1 : "0" + (dat.getMonth() + 1)) + String(dat.getDate() > 9 ? dat.getDate() : '0' + dat.getDate()),
+    h = String(dat.getHours() > 9 ? dat.getHours() : "0" + dat.getHours()),
+    m = String(dat.getMinutes() > 9 ? dat.getMinutes() : "0" + dat.getMinutes())
+
+
+  const link = document.createElement('a');
+  link.href = dataURL;
+  link.download = `軌道擺設模擬-${date}-${h}${m}.png`;
+  link.click();
+}
+
+
+const saveButton = document.getElementById("saveImgBtn")
+saveButton.addEventListener('click', () => {
+  exportCanvas()
+});
 
 
 
