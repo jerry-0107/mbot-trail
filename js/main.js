@@ -238,11 +238,11 @@ function addImg(imgs, points) {
     new fabric.Image(imgPath, {
       name: ``,
       top: 101,
-      left: 37,
+      left: -10,
       padding: 10,
       borderDashArray: [5, 5],
       cornerStyle: 'circle',
-      angle: 90
+      //    angle: 90
 
     })
   canvas.add(img)
