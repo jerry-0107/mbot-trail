@@ -583,7 +583,7 @@
             var _this = this;
             if (this.getActiveGroup() && this.getActiveGroup() !== 'undefined') {
                 this.getActiveGroup().forEachObject(function (o) {
-                    console.log(o)
+                    // console.log(o)
                     //     o.off();
                     if (o) o.remove();
                 });

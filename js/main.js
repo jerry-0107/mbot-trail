@@ -11,7 +11,7 @@ canvas.setBackgroundImage("/img/底圖.png", function () {
   canvas.renderAll();
 });
 
-const text = new fabric.Text('軌道擺設模擬 By Jerry. 2023 ~ 2025.06', {
+const attrText = new fabric.Text('軌道擺設模擬 By Jerry. 2023 ~ 2025.06', {
   left: 700,
   top: 338,
   fontSize: 11,
@@ -21,10 +21,11 @@ const text = new fabric.Text('軌道擺設模擬 By Jerry. 2023 ~ 2025.06', {
   selectable: false,
   backgroundColor: "#ccc",
   padding: 10,
-  margin: 10
+  margin: 10,
+  id: "attrText"
 });
 
-canvas.add(text);
+canvas.add(attrText);
 
 //加入新板子: 取得radio value => render
 function findSelection(name) {
@@ -55,23 +56,22 @@ $("#joinBtn").on("click", function () {
 
 function exportCanvas() {
   // Convert canvas to data URL
-
-  const text = new fabric.Text('軌道擺設模擬 By Jerry. 2023 ~ 2025.06', {
-    left: 700,
+  const text = new fabric.Text('軌道擺設模擬 By Jerry. 2023 ~ 2025.06 [請勿遮擋此標籤]', {
+    left: 620,
     top: 338,
     fontSize: 11,
     fill: 'black',
     evented: false,
     fontFamily: 'Arial',
     selectable: false,
-    backgroundColor: "#ccc",
+    backgroundColor: "#ff0000",
     padding: 10,
     margin: 10
   });
-
-  canvas.add(text);
-
-
+  if (isAttrTextBoxBeenBlocked()) {
+    canvas.discardActiveObject()
+    canvas.add(text);
+  }
 
   const dataURL = canvas.toDataURL({
     format: 'png',
@@ -85,12 +85,13 @@ function exportCanvas() {
     m = String(dat.getMinutes() > 9 ? dat.getMinutes() : "0" + dat.getMinutes())
 
 
+
   const link = document.createElement('a');
   link.href = dataURL;
   link.download = `軌道擺設模擬-${date}-${h}${m}.png`;
   link.click();
 
-  canvas.remove(text)
+  if (isAttrTextBoxBeenBlocked()) canvas.remove(text)
 
 }
 
@@ -360,3 +361,38 @@ window.addEventListener("beforeunload", (e) => {
   e.preventDefault();
   e.returnValue = true;
 });
+
+
+
+function isAttrTextBoxBeenBlocked() {
+
+  const target = canvas.getObjects().find(obj => obj.id === 'attrText');
+  const targetBounds = target.getBoundingRect();
+
+  const allObjects = canvas.getObjects();
+  const targetIndex = allObjects.indexOf(target);
+  console.log(allObjects, targetIndex)
+  let isObscured = false;
+
+  for (let i = targetIndex + 1; i < allObjects.length; i++) {
+    const obj = allObjects[i];
+
+    if (!obj.visible) continue; // 跳過隱藏物件
+
+    const objBounds = obj.getBoundingRect();
+
+    const intersects =
+      targetBounds.left < objBounds.left + objBounds.width &&
+      targetBounds.left + targetBounds.width > objBounds.left &&
+      targetBounds.top < objBounds.top + objBounds.height &&
+      targetBounds.top + targetBounds.height > objBounds.top;
+
+    if (intersects) {
+      isObscured = true;
+      break;
+    }
+  }
+
+  console.log(`Object ${target.id} is ${isObscured ? "obscured" : "not obscured"}`);
+  return isObscured
+}
