@@ -6,10 +6,10 @@
  */
 
 'use strict';
-(function(window) {
-    var fabric = window.fabric || ( window.fabric = {} ),
+(function (window) {
+    var fabric = window.fabric || (window.fabric = {}),
         minExtCompat = '1.6.0',
-        isVML = function() {
+        isVML = function () {
             return typeof G_vmlCanvasManager !== 'undefined';
         },
         degreesToRadians = fabric.util.degreesToRadians,
@@ -71,7 +71,7 @@
          * @param callback function
          */
 
-        customiseCornerIcons: function(obj, callback) {
+        customiseCornerIcons: function (obj, callback) {
             var setting,
                 cornerConfig;
 
@@ -110,8 +110,8 @@
                         if (obj[setting].icon !== undefined) {
                             cornerConfig.icon = obj[setting].icon;
 
-                            this.loadIcon(setting, cornerConfig, function() {
-                                if (callback && typeof( callback ) === 'function') {
+                            this.loadIcon(setting, cornerConfig, function () {
+                                if (callback && typeof (callback) === 'function') {
                                     callback();
                                 }
                             });
@@ -128,23 +128,23 @@
          * @param callback function.
          */
 
-        loadIcon: function(corner, cornerConfig, callback) {
+        loadIcon: function (corner, cornerConfig, callback) {
             var self = this,
                 icon = new Image();
 
-            icon.onload = function() {
+            icon.onload = function () {
                 self[corner + 'Icon'] = this;
 
                 if (cornerConfig.settings) {
                     self[corner + 'Settings'] = cornerConfig.settings;
                 }
 
-                if (callback && typeof( callback ) === 'function') {
+                if (callback && typeof (callback) === 'function') {
                     callback();
                 }
             };
 
-            icon.onerror = function() {
+            icon.onerror = function () {
                 fabric.warn(this.src + ' icon is not an image');
             };
 
@@ -160,7 +160,7 @@
          * @param {Object} obj containing corner icon urls and settings.
          */
 
-        customizeCornerIcons: function(obj) {
+        customizeCornerIcons: function (obj) {
             this.customiseCornerIcons(obj);
         },
 
@@ -173,7 +173,7 @@
          * @chainable
          */
 
-        drawControls: function(ctx) {
+        drawControls: function (ctx) {
 
             if (!this.hasControls) {
                 return this;
@@ -291,7 +291,7 @@
          * {string} icon url of the control
          */
 
-        _drawControl: function(control, ctx, methodName, left, top, icon, settings) {
+        _drawControl: function (control, ctx, methodName, left, top, icon, settings) {
             if (!this.isControlVisible(control)) {
                 return;
             }
@@ -397,7 +397,7 @@
          * @param {Object} obj containing corner action and cursor url/type.
          */
 
-        customiseControls: function(obj) {
+        customiseControls: function (obj) {
             var setting;
 
             for (setting in obj) {
@@ -421,7 +421,7 @@
          * @param action as a string.
          */
 
-        setCustomAction: function(corner, action) {
+        setCustomAction: function (corner, action) {
             this[corner + 'Action'] = action;
         },
 
@@ -431,7 +431,7 @@
          * @param cursorUrl as a string.
          */
 
-        setCustomCursor: function(corner, cursorUrl) {
+        setCustomCursor: function (corner, cursorUrl) {
             this[corner + 'cursorIcon'] = cursorUrl;
         },
 
@@ -440,7 +440,7 @@
          * @param {Object} obj containing corner action and cursor url/type.
          */
 
-        customizeControls: function(obj) {
+        customizeControls: function (obj) {
             this.customiseControls(obj);
         },
 
@@ -448,7 +448,7 @@
          * @private
          */
 
-        _getActionFromCorner: function(target, corner, e) {
+        _getActionFromCorner: function (target, corner, e) {
             if (!corner) {
                 return 'drag';
             }
@@ -497,7 +497,7 @@
          * @param {Event} e Event object
          * @param {fabric.Object} target
          */
-        _setupCurrentTransform: function(e, target) {
+        _setupCurrentTransform: function (e, target) {
             if (!target) {
                 return;
             }
@@ -579,17 +579,18 @@
          * @param {fabric.Object} target
          */
 
-        _removeAction: function(e, target) {
+        _removeAction: function (e, target) {
             var _this = this;
             if (this.getActiveGroup() && this.getActiveGroup() !== 'undefined') {
-                this.getActiveGroup().forEachObject(function(o) {
-                    o.off();
-                    o.remove();
+                this.getActiveGroup().forEachObject(function (o) {
+                    console.log(o)
+                    //     o.off();
+                    if (o) o.remove();
                 });
                 this.discardActiveGroup();
 
                 // as of fabric 1.6.3 necessary for reasons..
-                setTimeout(function() {
+                setTimeout(function () {
                     _this.deactivateAll();
                 }, 0);
 
@@ -597,7 +598,7 @@
                 target.off();
                 target.remove();
 
-                setTimeout(function() {
+                setTimeout(function () {
                     _this.deactivateAll();
                 }, 0);
             }
@@ -610,9 +611,9 @@
          * @param {fabric.Object} target
          */
 
-        _moveLayerUpAction: function(e, target) {
+        _moveLayerUpAction: function (e, target) {
             if (this.getActiveGroup() && this.getActiveGroup() !== 'undefined') {
-                this.getActiveGroup().forEachObject(function(o) {
+                this.getActiveGroup().forEachObject(function (o) {
                     o.bringForward();
                 });
             } else {
@@ -627,9 +628,9 @@
          * @param {fabric.Object} target
          */
 
-        _moveLayerDownAction: function(e, target) {
+        _moveLayerDownAction: function (e, target) {
             if (this.getActiveGroup() && this.getActiveGroup() !== 'undefined') {
-                this.getActiveGroup().forEachObject(function(o) {
+                this.getActiveGroup().forEachObject(function (o) {
                     o.sendBackwards();
                 });
             } else {
@@ -645,11 +646,11 @@
          * @param {Integer} value of rotation
          */
 
-        _rotateByDegrees: function(e, target, value) {
+        _rotateByDegrees: function (e, target, value) {
             var angle = parseInt(target.getAngle()) + value,
                 needsOriginRestore = false;
 
-            if (( target.originX !== 'center' || target.originY !== 'center' ) && target.centeredRotation) {
+            if ((target.originX !== 'center' || target.originY !== 'center') && target.centeredRotation) {
                 this._setOriginToCenter(target);
                 needsOriginRestore = true;
             }
@@ -657,7 +658,7 @@
             angle = angle > 360 ? angle - 360 : angle;
 
             if (this.getActiveGroup() && this.getActiveGroup() !== 'undefined') {
-                this.getActiveGroup().forEachObject(function(obj) {
+                this.getActiveGroup().forEachObject(function (obj) {
                     obj
                         .setAngle(angle)
                         .setCoords();
@@ -682,7 +683,7 @@
          * {string} corner name
          * {target} event handler of the hovered corner
          */
-        _setCornerCursor: function(corner, target, e) {
+        _setCornerCursor: function (corner, target, e) {
             var iconUrlPattern = /\.(?:jpe?g|png|gif|jpg|jpeg|svg)$/;
 
             if (this.fixedCursors && this[corner + 'cursorIcon']) {

@@ -18,7 +18,10 @@ const text = new fabric.Text('軌道擺設模擬 By Jerry. 2023 ~ 2025.06', {
   fill: 'black',
   evented: false,
   fontFamily: 'Arial',
-  selectable: false
+  selectable: false,
+  backgroundColor: "#ccc",
+  padding: 10,
+  margin: 10
 });
 
 canvas.add(text);
@@ -43,7 +46,7 @@ $("#joinBtn").on("click", function () {
       left: 30,
       padding: 10,
       borderDashArray: [5, 5],
-      cornerStyle: 'circle'
+      cornerStyle: 'circle',
 
     })
   canvas.add(img)
@@ -52,6 +55,24 @@ $("#joinBtn").on("click", function () {
 
 function exportCanvas() {
   // Convert canvas to data URL
+
+  const text = new fabric.Text('軌道擺設模擬 By Jerry. 2023 ~ 2025.06', {
+    left: 700,
+    top: 338,
+    fontSize: 11,
+    fill: 'black',
+    evented: false,
+    fontFamily: 'Arial',
+    selectable: false,
+    backgroundColor: "#ccc",
+    padding: 10,
+    margin: 10
+  });
+
+  canvas.add(text);
+
+
+
   const dataURL = canvas.toDataURL({
     format: 'png',
     quality: 1.0,
@@ -68,6 +89,9 @@ function exportCanvas() {
   link.href = dataURL;
   link.download = `軌道擺設模擬-${date}-${h}${m}.png`;
   link.click();
+
+  canvas.remove(text)
+
 }
 
 
