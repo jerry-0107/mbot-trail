@@ -242,8 +242,7 @@ fabric.Object.prototype.setControlsVisibility({
   mtr: false // 旋轉控制鍵
 })
 
-//當畫布更新觸發的事件 (也許之後用的上)
-canvas.on("object:modified", function (e) { console.log(e) })
+
 
 //選擇多於一張板子會觸發bug
 // canvas.on('object:selected', function (e) {
