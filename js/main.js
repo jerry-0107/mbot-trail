@@ -10,6 +10,8 @@ canvas.setWidth(900);
 canvas.setBackgroundImage("/img/底圖.png", function () {
   canvas.renderAll();
 });
+const toastElList = document.querySelectorAll('.toast')
+const toastList = [...toastElList].map(toastEl => new bootstrap.Toast(toastEl))
 
 const attrText = new fabric.Text('軌道擺設模擬 By Jerry. 2023 ~ 2025.06', {
   left: 700,
@@ -131,43 +133,49 @@ fabric.Canvas.prototype.customiseControls({
   br: {
     cursor: "pointer",
     action: function (e, target) {
-
+      if (!canvas.getActiveObject()) {
+        new bootstrap.Toast(document.getElementById('alertToast')).show()
+        return
+      }
       canvas.getActiveObject().clone(function (cloned) {
         _clipboard = cloned;
+
+
+        _clipboard.clone(function (clonedObj) {
+          canvas.discardActiveObject();
+
+          clonedObj.set({
+            left: clonedObj.left + 10,
+            top: clonedObj.top + 10,
+            name: ``,
+
+            padding: 10,
+            borderDashArray: [5, 5],
+            cornerStyle: 'circle',
+
+            evented: true,
+          });
+          if (clonedObj.type === 'activeSelection') {
+            // active selection needs a reference to the canvas.
+            clonedObj.canvas = canvas;
+            clonedObj.forEachObject(function (obj) {
+              canvas.add(obj);
+            });
+            // this should solve the unselectability
+            //  clonedObj.setCoords();
+          } else {
+            canvas.add(clonedObj);
+          }
+          _clipboard.top += 10;
+          _clipboard.left += 10;
+          canvas.setActiveObject(clonedObj);
+          canvas.renderAll()
+          //   canvas.requestRenderAll();
+        })
       });
 
 
-      _clipboard.clone(function (clonedObj) {
-        canvas.discardActiveObject();
 
-        clonedObj.set({
-          left: clonedObj.left + 10,
-          top: clonedObj.top + 10,
-          name: ``,
-
-          padding: 10,
-          borderDashArray: [5, 5],
-          cornerStyle: 'circle',
-
-          evented: true,
-        });
-        if (clonedObj.type === 'activeSelection') {
-          // active selection needs a reference to the canvas.
-          clonedObj.canvas = canvas;
-          clonedObj.forEachObject(function (obj) {
-            canvas.add(obj);
-          });
-          // this should solve the unselectability
-          //  clonedObj.setCoords();
-        } else {
-          canvas.add(clonedObj);
-        }
-        _clipboard.top += 10;
-        _clipboard.left += 10;
-        canvas.setActiveObject(clonedObj);
-        canvas.renderAll()
-        //   canvas.requestRenderAll();
-      })
     },
 
   },
@@ -271,6 +279,14 @@ function setAllowSelection(e) {
   }
 }
 
+canvas.on("object:modified", () => {
+  //防止悲劇發生 (onbeforeunload) => 要離開網站嗎?系統不會儲存你所做的變更
+  window.addEventListener("beforeunload", (e) => {
+    e.preventDefault();
+    e.returnValue = true;
+  });
+})
+
 //加入題組
 function addImg(imgs, points) {
 
@@ -354,13 +370,6 @@ function addImg(imgs, points) {
 
   canvas.renderAll()
 }
-
-//防止悲劇發生 (onbeforeunload) => 要離開網站嗎?系統不會儲存你所做的變更
-window.addEventListener("beforeunload", (e) => {
-  e.preventDefault();
-  e.returnValue = true;
-});
-
 
 
 function isAttrTextBoxBeenBlocked() {

@@ -157,7 +157,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>選擇超過一張板子之後，請勿進行旋轉、複製、刪除等操作 (控制按鈕可能會崩潰，這是第三方函式庫的問題，目前似乎無解🥲)</p>
+                    <p>選擇超過一張板子之後，建議不要進行旋轉、複製、刪除等操作 (控制按鈕可能會崩潰，這是第三方函式庫的問題，目前似乎無解🥲)</p>
                     <p>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="alertmodal-cb">
@@ -169,12 +169,27 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                        onclick="if(document.getElementById('alertmodal-cb').checked){localStorage.setItem('mbotTrailer-showalert1','false')}">OK</button>
+                        onclick="if(document.getElementById('alertmodal-cb').checked){localStorage.setItem('mbotTrailer-showalert1','false')}else{localStorage.setItem('mbotTrailer-showalert1','true')}">OK</button>
                 </div>
             </div>
         </div>
     </div>
 
+
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5">
+        <div id="alertToast" class="toast hide bg-warning" role="alert" aria-live="assertive" aria-atomic="true">
+
+            <div class="d-flex">
+                <div class="toast-body">
+                    無法同時複製超過一張板子
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <button aria-hidden="true" hidden style="display: none;" data-bs-toggle="toast" data-bs-target="#alertToast"
+        id="toast-trigger"></button>
 
     <!--BS JS-->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
