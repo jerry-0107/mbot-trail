@@ -1,5 +1,5 @@
 
-//init
+//init----------
 var canvas = new fabric.Canvas("main", {
   selection: false,
   backgroundColor: "#ffffff"
@@ -28,6 +28,10 @@ const attrText = new fabric.Text('軌道擺設模擬 By Jerry. 2023 ~ 2025.06', 
 });
 
 canvas.add(attrText);
+
+
+$('#advsetting1').attr('checked', localStorage.getItem('mbotTrailer-advsetting1') === 'true')
+//-----------
 
 //加入新板子: 取得radio value => render
 function findSelection(name) {
@@ -116,7 +120,7 @@ fabric.Canvas.prototype.customiseControls({
 
   },
   tr: {
-    action: 'rotate',
+    //action: 'rotate',
     action: {
       'rotateByDegrees': 90
     },
@@ -404,3 +408,16 @@ function isAttrTextBoxBeenBlocked() {
   console.log(`Object ${target.id} is ${isObscured ? "obscured" : "not obscured"}`);
   return isObscured
 }
+
+
+canvas.on('object:moving', (e) => {
+  if (localStorage.getItem("mbotTrailer-advsetting1") === 'true') {
+    try {
+      const target = e.target,
+        x = 23, y = 23
+      // 設定移動間隔為格線間隔
+      target.left = Math.round(target.left / x) * x + 36
+      target.top = Math.round(target.top / y) * y + 35
+    } catch { }
+  }
+})

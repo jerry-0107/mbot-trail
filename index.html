@@ -143,6 +143,14 @@
             onclick="
         const alertModal = new bootstrap.Modal(document.getElementById('alertModal'));alertModal.toggle()">注意事項</button>
     </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="advsetting1"
+            onchange="localStorage.setItem(`mbotTrailer-advsetting1`,String(this.checked))">
+        <label class="form-check-label" for="advsetting1">
+            貼齊格線
+        </label>
+
+    </div>
     <hr>
     <pre>BY <a href="mailto://jerry20200815@gmail.com" style="color:inherit">Jerry</a>. 2023 ~ 2025.06 </pre>
     <div hidden="hidden"><img src="/img/底圖.png" alt="" srcset="" id="background"></div>
