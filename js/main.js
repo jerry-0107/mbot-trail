@@ -414,9 +414,9 @@ canvas.on('object:moving', (e) => {
   if (localStorage.getItem("mbotTrailer-advsetting1") === 'true') {
     try {
       const target = e.target,
-        x = 23, y = 23
+        x = 23, y = 22.50
       // 設定移動間隔為格線間隔
-      target.left = Math.round(target.left / x) * x + 36
+      target.left = Math.round(target.left / x) * x + 35.6
       target.top = Math.round(target.top / y) * y + 35
     } catch { }
   }
