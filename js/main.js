@@ -48,7 +48,7 @@ $("#joinBtn").on("click", function () {
   var imgPath = document.querySelector("#" + findSelection("flexRadioDefault"))
   var img =
     new fabric.Image(imgPath, {
-      name: ``,
+      name: findSelection("flexRadioDefault"),
       top: 265,
       left: 30,
       padding: 5,
@@ -133,7 +133,6 @@ fabric.Canvas.prototype.customiseControls({
 
     cursor: "pointer",
     action: function () {
-      // console.log(canvas.getSelection())
       var activeGroup = canvas.getActiveGroup();
       if (activeGroup) {
         var activeObjects = activeGroup.getObjects();
@@ -144,7 +143,7 @@ fabric.Canvas.prototype.customiseControls({
         canvas.renderAll();
       } else canvas.getActiveObject().remove();
 
-      setTimeout(function () {
+      setTimeout(function () { // for some reason...
         canvas.deactivateAll();
         canvas.renderAll();
       }, 10);
@@ -361,7 +360,7 @@ function addImg(imgs, points) {
       var imgPath = document.querySelector("#img-" + imgs[i])
       var img =
         new fabric.Image(imgPath, {
-          name: ``,
+          name: "#img-" + imgs[i],
           top: 265,
           left: 30 + left,
           padding: 5,
@@ -378,7 +377,7 @@ function addImg(imgs, points) {
     var imgPath = document.querySelector("#img-" + "S")
     var img =
       new fabric.Image(imgPath, {
-        name: ``,
+        name: `img-S`,
         top: 265,
         left: 30 + left,
         padding: 5,
@@ -434,11 +433,21 @@ canvas.on('object:moving', (e) => {
       const target = e.target,
         x = 23, y = 22.50
       // 設定移動間隔為格線間隔
-      if (target.left > 620) {
-        target.left = Math.round(target.left / x) * x + 7
 
+      console.log(target.name, target.angle)
+      if (target.angle == -90 || target.angle == 270 && Number(target.name.replace('img-', '')) > 5) {
+        if (target.left > 620) {
+          target.left = Math.round(target.left / x) * x + 9
+        } else {
+          target.left = Math.round(target.left / x) * x + 12
+
+        }
+      }
+
+      else if (target.left > 620) {
+        target.left = Math.round(target.left / x) * x + 7
       } else {
-        target.left = Math.round(target.left / x) * x + 10
+        target.left = Math.round(target.left / x) * x + 10.5
       }
       target.top = Math.round(target.top / y) * y + 6.5
     } catch { }
