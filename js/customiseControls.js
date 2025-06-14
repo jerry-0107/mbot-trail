@@ -602,6 +602,7 @@
                     _this.deactivateAll();
                 }, 0);
             }
+
         },
 
         /**

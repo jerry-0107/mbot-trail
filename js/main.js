@@ -1,7 +1,7 @@
 
 //init----------
 var canvas = new fabric.Canvas("main", {
-  selection: false,
+  selection: localStorage.getItem("mbotTrailer-allowselection") === 'true',
   backgroundColor: "#ffffff"
 })
 canvas.setHeight(350);
@@ -22,14 +22,14 @@ const attrText = new fabric.Text('軌道擺設模擬 By Jerry. 2023 ~ 2025.06', 
   fontFamily: 'Arial',
   selectable: false,
   backgroundColor: "#ccc",
-  padding: 10,
+  padding: 5,
   margin: 10,
   id: "attrText"
 });
 
 canvas.add(attrText);
 
-
+$('#allowselection').attr('checked', localStorage.getItem('mbotTrailer-allowselection') === 'true')
 $('#advsetting1').attr('checked', localStorage.getItem('mbotTrailer-advsetting1') === 'true')
 //-----------
 
@@ -51,7 +51,7 @@ $("#joinBtn").on("click", function () {
       name: ``,
       top: 265,
       left: 30,
-      padding: 10,
+      padding: 5,
       borderDashArray: [5, 5],
       cornerStyle: 'circle',
 
@@ -71,7 +71,7 @@ function exportCanvas() {
     fontFamily: 'Arial',
     selectable: false,
     backgroundColor: "#ff0000",
-    padding: 10,
+    padding: 5,
     margin: 10
   });
   if (isAttrTextBoxBeenBlocked()) {
@@ -129,9 +129,26 @@ fabric.Canvas.prototype.customiseControls({
 
   },
   bl: {
-    action: 'remove',
+    //   action: 'remove',
 
-    cursor: "pointer"
+    cursor: "pointer",
+    action: function () {
+      // console.log(canvas.getSelection())
+      var activeGroup = canvas.getActiveGroup();
+      if (activeGroup) {
+        var activeObjects = activeGroup.getObjects();
+        for (let i in activeObjects) {
+          canvas.remove(activeObjects[i]);
+        }
+        canvas.discardActiveGroup();
+        canvas.renderAll();
+      } else canvas.getActiveObject().remove();
+
+      setTimeout(function () {
+        canvas.deactivateAll();
+        canvas.renderAll();
+      }, 10);
+    }
 
   },
   br: {
@@ -153,7 +170,7 @@ fabric.Canvas.prototype.customiseControls({
             top: clonedObj.top + 10,
             name: ``,
 
-            padding: 10,
+            padding: 5,
             borderDashArray: [5, 5],
             cornerStyle: 'circle',
 
@@ -268,6 +285,7 @@ fabric.Object.prototype.setControlsVisibility({
 
 function setAllowSelection(e) {
   if (e) {
+    localStorage.setItem("mbotTrailer-allowselection", 'true')
     //  localStorage.setItem("mbotTrailer-allowselection", "true")
     const alertModal = new bootstrap.Modal(document.getElementById('alertModal'));
     if (localStorage.getItem("mbotTrailer-showalert1") !== "false") {
@@ -278,8 +296,8 @@ function setAllowSelection(e) {
 
   } else {
     canvas.selection = false
-
-    //  localStorage.setItem("mbotTrailer-allowselection", "false")
+    canvas.renderAll()
+    localStorage.setItem("mbotTrailer-allowselection", 'false')
   }
 }
 
@@ -298,25 +316,25 @@ function addImg(imgs, points) {
   var imgPath = document.querySelector("#img-" + "A")
   canvas.add(new fabric.Image(imgPath, {
     name: ``,
-    top: 122,
-    left: 220,
-    padding: 10,
+    top: 118,
+    left: 218,
+    padding: 5,
     borderDashArray: [5, 5],
     cornerStyle: 'circle'
   }))
   canvas.add(new fabric.Image(imgPath, {
     name: ``,
-    top: 79,
-    left: 426,
-    padding: 10,
+    top: 73,
+    left: 424,
+    padding: 5,
     borderDashArray: [5, 5],
     cornerStyle: 'circle'
   }))
   canvas.add(new fabric.Image(imgPath, {
     name: ``,
-    top: 101,
-    left: 633,
-    padding: 10,
+    top: 96,
+    left: 630,
+    padding: 5,
     borderDashArray: [5, 5],
     cornerStyle: 'circle'
   }))
@@ -327,9 +345,9 @@ function addImg(imgs, points) {
   var img =
     new fabric.Image(imgPath, {
       name: ``,
-      top: 101,
+      top: 97,
       left: -10,
-      padding: 10,
+      padding: 5,
       borderDashArray: [5, 5],
       cornerStyle: 'circle',
       //    angle: 90
@@ -346,7 +364,7 @@ function addImg(imgs, points) {
           name: ``,
           top: 265,
           left: 30 + left,
-          padding: 10,
+          padding: 5,
           borderDashArray: [5, 5],
           cornerStyle: 'circle'
 
@@ -363,7 +381,7 @@ function addImg(imgs, points) {
         name: ``,
         top: 265,
         left: 30 + left,
-        padding: 10,
+        padding: 5,
         borderDashArray: [5, 5],
         cornerStyle: 'circle'
 
@@ -416,8 +434,13 @@ canvas.on('object:moving', (e) => {
       const target = e.target,
         x = 23, y = 22.50
       // 設定移動間隔為格線間隔
-      target.left = Math.round(target.left / x) * x + 35.6
-      target.top = Math.round(target.top / y) * y + 35
+      if (target.left > 620) {
+        target.left = Math.round(target.left / x) * x + 7
+
+      } else {
+        target.left = Math.round(target.left / x) * x + 10
+      }
+      target.top = Math.round(target.top / y) * y + 6.5
     } catch { }
   }
 })
