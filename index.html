@@ -133,21 +133,21 @@
     </table>
     <hr>
     <h3>進階設定</h3>
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="allowselection"
+    <!-- <div class="form-check"> -->
+    <!-- <input class="form-check-input" type="checkbox" value="" id="allowselection"
             onchange="setAllowSelection(this.checked)">
         <label class="form-check-label" for="allowselection">
             允許框選(同時選擇超過一張板子)
         </label>
         <button class="btn btn-link btn-sm"
             onclick="
-        const alertModal = new bootstrap.Modal(document.getElementById('alertModal'));alertModal.toggle()">注意事項</button>
-    </div>
+        const alertModal = new bootstrap.Modal(document.getElementById('alertModal'));alertModal.toggle()">注意事項</button> -->
+    <!-- </div> -->
     <div class="form-check">
         <input class="form-check-input" type="checkbox" value="" id="advsetting1"
             onchange="localStorage.setItem(`mbotTrailer-advsetting1`,String(this.checked))">
         <label class="form-check-label" for="advsetting1">
-            貼齊格線
+            貼齊格線 (一次選取多張板子無法使用此功能)
         </label>
 
     </div>

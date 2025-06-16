@@ -1,7 +1,7 @@
 
 //init----------
 var canvas = new fabric.Canvas("main", {
-  selection: localStorage.getItem("mbotTrailer-allowselection") === 'true',
+  selection: true,// localStorage.getItem("mbotTrailer-allowselection") === 'true',
   backgroundColor: "#ffffff"
 })
 canvas.setHeight(350);
@@ -113,16 +113,54 @@ saveButton.addEventListener('click', () => {
 //以下這段code超脆弱，絕!對!不!要!動!
 fabric.Canvas.prototype.customiseControls({
   tl: {
-    action: {
-      'rotateByDegrees': -90
+    // action: {
+    //   'rotateByDegrees': -90
+    // },
+    action: function () {
+      var activeGroup = canvas.getActiveGroup();
+      if (activeGroup) {
+        var activeObjects = activeGroup.getObjects();
+        for (let i in activeObjects) {
+          const t = activeObjects[i].angle
+          activeObjects[i].set('angle', t - 90)
+        }
+        canvas.discardActiveGroup();
+        canvas.renderAll();
+      } else {
+        const t = canvas.getActiveObject().angle
+        canvas.getActiveObject().set('angle', t - 90)
+      }
+      setTimeout(function () { // for some reason...
+        // canvas.deactivateAll();
+        canvas.renderAll();
+      }, 10);
     },
     cursor: "pointer"
 
   },
   tr: {
     //action: 'rotate',
-    action: {
-      'rotateByDegrees': 90
+    // action: {
+    //   'rotateByDegrees': 90
+    // },
+    action: function () {
+      var activeGroup = canvas.getActiveGroup();
+      if (activeGroup) {
+        var activeObjects = activeGroup.getObjects();
+        for (let i in activeObjects) {
+          const t = activeObjects[i].angle
+          activeObjects[i].set('angle', t + 90)
+        }
+        canvas.discardActiveGroup();
+        canvas.renderAll();
+      } else {
+        const t = canvas.getActiveObject().angle
+        canvas.getActiveObject().set('angle', t + 90)
+      }
+      setTimeout(function () { // for some reason...
+        // canvas.deactivateAll();
+        canvas.renderAll();
+      }, 10);
     },
 
     cursor: "pointer"
@@ -430,6 +468,9 @@ function isAttrTextBoxBeenBlocked() {
 canvas.on('object:moving', (e) => {
   if (localStorage.getItem("mbotTrailer-advsetting1") === 'true') {
     try {
+      var activeGroup = canvas.getActiveGroup();
+      if (activeGroup) return
+
       const target = e.target,
         x = 23, y = 22.50
       // 設定移動間隔為格線間隔
@@ -453,3 +494,13 @@ canvas.on('object:moving', (e) => {
     } catch { }
   }
 })
+
+// var isXPressed = false
+// document.addEventListener('keydown', function (event) {
+//   console.log('Key down:', event.key);
+//   if (event.key === 'x') isXPressed = true
+//   else isXPressed = false
+// });
+// document.addEventListener('keyup', function (event) {
+//   isXPressed = false
+// });
