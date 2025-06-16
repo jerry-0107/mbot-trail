@@ -152,7 +152,7 @@
 
     </div>
     <hr>
-    <pre>BY <a href="mailto://jerry20200815@gmail.com" style="color:inherit">Jerry</a>. 2023 ~ 2025.06 </pre>
+    <pre>BY <a href="mailto://jerry20200815@gmail.com" style="color:inherit">Jerry</a>. 2023 ~ 2025.06  **比賽加油**</pre>
     <div hidden="hidden"><img src="/img/底圖.png" alt="" srcset="" id="background"></div>
     <!--Alert Modal-->
 
@@ -178,6 +178,27 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
                         onclick="if(document.getElementById('alertmodal-cb').checked){localStorage.setItem('mbotTrailer-showalert1','false')}else{localStorage.setItem('mbotTrailer-showalert1','true')}">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade show" tabindex="-1" id="alertModal2" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">確認刪除多張板子</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>你確定要刪除所選取的<b><span id="delBoardCount"> - </span>張板子</b>嗎?<br>
+                        <span class="text-danger">注意:這項操作無法恢復!</span>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick>取消</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                        onclick="deleteAllSelectedObj(true)">確定</button>
                 </div>
             </div>
         </div>

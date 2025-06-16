@@ -173,18 +173,19 @@ fabric.Canvas.prototype.customiseControls({
     action: function () {
       var activeGroup = canvas.getActiveGroup();
       if (activeGroup) {
-        var activeObjects = activeGroup.getObjects();
-        for (let i in activeObjects) {
-          canvas.remove(activeObjects[i]);
-        }
-        canvas.discardActiveGroup();
-        canvas.renderAll();
-      } else canvas.getActiveObject().remove();
+        console.log(activeGroup)
+        $('#delBoardCount').text(activeGroup._objects.length)
+        const alertModal = new bootstrap.Modal(document.getElementById('alertModal2'));
 
-      setTimeout(function () { // for some reason...
-        canvas.deactivateAll();
-        canvas.renderAll();
-      }, 10);
+        alertModal.show()
+      } else {
+        canvas.getActiveObject().remove();
+
+        setTimeout(function () { // for some reason...
+          canvas.deactivateAll();
+          canvas.renderAll();
+        }, 10);
+      }
     }
 
   },
@@ -319,6 +320,24 @@ fabric.Object.prototype.setControlsVisibility({
 //     canvas.deactivateAll()
 //   }
 // });
+function deleteAllSelectedObj(confirmed) {
+  if (confirmed) {
+    var activeGroup = canvas.getActiveGroup();
+    if (activeGroup) {
+      var activeObjects = activeGroup.getObjects();
+      for (let i in activeObjects) {
+        canvas.remove(activeObjects[i]);
+      }
+      canvas.discardActiveGroup();
+      canvas.renderAll();
+    } else canvas.getActiveObject().remove();
+
+    setTimeout(function () { // for some reason...
+      canvas.deactivateAll();
+      canvas.renderAll();
+    }, 10);
+  }
+}
 
 function setAllowSelection(e) {
   if (e) {
